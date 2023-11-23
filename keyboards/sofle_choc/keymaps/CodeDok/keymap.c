@@ -108,7 +108,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case INTELLIJ_SHOW_IN_EXPLORER:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LALT));
-                SEND_STRING(SS_TAP(X_1));
+                SEND_STRING(SS_TAP(X_F1));
                 SEND_STRING(SS_UP(X_LALT));
                 SEND_STRING(SS_TAP(X_1));
             } else {}
