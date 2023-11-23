@@ -38,7 +38,8 @@ enum custom_keycodes {
 	DISCORD_OVERLAY,
 	INTELLIJ_MOVE_FORWARD,
 	INTELLIJ_MOVE_BACKWARD,
-    INTELLIJ_SHOW_IN_EXPLORER
+    INTELLIJ_SHOW_IN_EXPLORER,
+    INTELLIJ_PIN_TAB
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -113,6 +114,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_TAP(X_1));
             } else {}
             break;
+        case INTELLIJ_PIN_TAB: 
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+				SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_LBRC)); // ü
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
+            }
     }
 	return true;
 }
