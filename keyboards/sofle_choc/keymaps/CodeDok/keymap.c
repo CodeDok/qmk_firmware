@@ -39,7 +39,8 @@ enum custom_keycodes {
 	INTELLIJ_MOVE_FORWARD,
 	INTELLIJ_MOVE_BACKWARD,
     INTELLIJ_SHOW_IN_EXPLORER,
-    INTELLIJ_PIN_TAB
+    INTELLIJ_PIN_TAB,
+    LINUX_INSERT,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -121,7 +122,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_TAP(X_LBRC)); // ü
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LCTL));
-            }
+            } else {}
+            break;
+        case LINUX_INSERT:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_INS)); // ü
+                SEND_STRING(SS_UP(X_LSFT));
+            } else {}
+            break;
     }
 	return true;
 }
@@ -205,7 +214,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
 			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
 			KC_NO,          KC_NO,          SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          INTELLIJ_MOVE_BACKWARD,     INTELLIJ_SHOW_IN_EXPLORER,  INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
 											KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                      KC_NO,                      KC_NO
 	),
 
