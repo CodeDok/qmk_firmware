@@ -211,11 +211,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* MACRO */
 	[MACRO] = LAYOUT(
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          INTELLIJ_MOVE_BACKWARD,     INTELLIJ_SHOW_IN_EXPLORER,  INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-											KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                      KC_NO,                      KC_NO
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,          SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_SHOW_IN_EXPLORER,  INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+											KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
 	),
 
 	/* GAME */
