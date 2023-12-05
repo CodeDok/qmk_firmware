@@ -92,18 +92,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 		case INTELLIJ_MOVE_FORWARD:
 			if (record->event.pressed) {
 				SEND_STRING(SS_DOWN(X_LALT));
-				SEND_STRING(SS_DOWN(X_LSFT));
+				SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_TAP(X_RIGHT));
-                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
                 SEND_STRING(SS_UP(X_LALT));
 			} else {}
             break;
         case INTELLIJ_MOVE_BACKWARD:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LALT));
-				SEND_STRING(SS_DOWN(X_LSFT));
+				SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_TAP(X_LEFT));
-                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
                 SEND_STRING(SS_UP(X_LALT));
             } else {}
             break;
