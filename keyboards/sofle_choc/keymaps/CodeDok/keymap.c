@@ -40,6 +40,14 @@ enum custom_keycodes {
 	INTELLIJ_MOVE_BACKWARD,
     INTELLIJ_SHOW_IN_EXPLORER,
     INTELLIJ_PIN_TAB,
+    INTELLIJ_LINE_UP,
+    INTELLIJ_LINE_DOWN,
+    INTELLIJ_COMMENT_LINE,
+    INTELLIJ_ACTION_SEARCH,
+    INTELLIJ_TERMINAL,
+    INTELLIJ_DATABASE,
+    INTELLIJ_SHOW_USAGE,
+    INTELLIJ_LAST_EDIT,
     LINUX_INSERT,
 };
 
@@ -115,7 +123,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_TAP(X_1));
             } else {}
             break;
-        case INTELLIJ_PIN_TAB: 
+        case INTELLIJ_PIN_TAB:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
 				SEND_STRING(SS_DOWN(X_LSFT));
@@ -124,10 +132,76 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LCTL));
             } else {}
             break;
+        case INTELLIJ_LINE_UP:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LALT));
+				SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_UP));
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LALT));
+            } else {}
+            break;
+        case INTELLIJ_LINE_DOWN:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LALT));
+				SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_DOWN));
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LALT));
+            } else {}
+            break;
+        case INTELLIJ_COMMENT_LINE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+                SEND_STRING(SS_TAP(X_SLASH));
+                SEND_STRING(SS_UP(X_LCTL));
+            } else {}
+            break;
+        case INTELLIJ_ACTION_SEARCH:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+                SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_A));
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
+            } else {}
+            break;
+        case INTELLIJ_TERMINAL:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LALT));
+                SEND_STRING(SS_TAP(X_F12));
+                SEND_STRING(SS_UP(X_LALT));
+            } else {}
+            break;
+        case INTELLIJ_DATABASE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LALT));
+                SEND_STRING(SS_TAP(X_F11));
+                SEND_STRING(SS_UP(X_LALT));
+            } else {}
+            break;
+        case INTELLIJ_SHOW_USAGE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+                SEND_STRING(SS_DOWN(X_LALT));
+                SEND_STRING(SS_TAP(X_F7));
+                SEND_STRING(SS_UP(X_LALT));
+                SEND_STRING(SS_UP(X_LCTL));
+            } else {}
+            break;
+        case INTELLIJ_LAST_EDIT:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+                SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_BSPC));
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
+            } else {}
+            break;
         case LINUX_INSERT:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LSFT));
-                SEND_STRING(SS_TAP(X_INS)); // ü
+                SEND_STRING(SS_TAP(X_INS));
                 SEND_STRING(SS_UP(X_LSFT));
             } else {}
             break;
@@ -202,7 +276,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/*SYMB*/
 	[SYMB] = LAYOUT(
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,           KC_NO,         KC_NO,          KC_NO,          KC_NO,
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_PSCR,                                        KC_NO,          KC_NO,           KC_NO,         KC_NO,          KC_NO,          KC_NO,
             KC_NO,          KC_ESC,         DE_QUOT,            DE_LPRN,        DE_RPRN,        KC_INS,                                         DE_AT,          DE_UDIA,         KC_UP,         DE_ODIA,        DE_EQL,         DE_ACUT,
 			KC_LSFT,        DE_ADIA,        DE_SS,              DE_LCBR,        DE_RCBR,        DE_SLSH,                                        TD(TD_HOME),    KC_LEFT,         KC_DOWN,       KC_RIGHT,       TD(TD_END),     KC_RSFT,
 			KC_LCTL,        DE_CIRC,        DE_PIPE,            DE_LBRC,        DE_RBRC,        DE_BSLS,        KC_NO,          KC_NO,          DE_ASTR,        DE_PLUS,         KC_BSLS,       DE_EXLM,        DE_QUES,        KC_RCTL,
@@ -211,11 +285,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* MACRO */
 	[MACRO] = LAYOUT(
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_SHOW_IN_EXPLORER,  INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-											KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
+			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_NO,          INTELLIJ_TERMINAL,          INTELLIJ_DATABASE,  KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
+			KC_NO,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
+											            KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
 	),
 
 	/* GAME */
@@ -233,7 +307,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_NO,          KC_F1,          KC_F2,              KC_F3,          KC_F4,          KC_NO,                                          KC_NO,          KC_7,           KC_8,           KC_9,           KC_PPLS,        KC_NO,
 			KC_LSFT,        KC_F5,          KC_F6,              KC_F7,          KC_F8,          KC_NO,                                          KC_NO,          KC_4,           KC_5,           KC_6,           KC_0,           KC_LSFT,
 			KC_LCTL,        KC_F9,          KC_F10,             KC_F11,         KC_F12,         KC_NO,          KC_NO,          KC_NO,          KC_PDOT,        KC_1,           KC_P,           KC_3,           KC_PEQL,        KC_LCTL,
-											KC_NO,              KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_NO,          KC_TRNS,        KC_TRNS,        KC_PENT
+											KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_NO,          KC_TRNS,        KC_TRNS,        KC_PENT
 	)
 
 };
