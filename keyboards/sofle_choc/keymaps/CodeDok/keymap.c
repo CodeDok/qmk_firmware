@@ -48,6 +48,7 @@ enum custom_keycodes {
     INTELLIJ_DATABASE,
     INTELLIJ_SHOW_USAGE,
     INTELLIJ_LAST_EDIT,
+    POWERTOYS_TEXT_INSERT,
     LINUX_INSERT,
 };
 
@@ -198,6 +199,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LCTL));
             } else {}
             break;
+        case POWERTOYS_TEXT_INSERT:
+            if(record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+                SEND_STRING(SS_DOWN(X_LALT));                
+                SEND_STRING(SS_DOWN(X_LGUI));
+                SEND_STRING(SS_TAP(X_V));
+                SEND_STRING(SS_UP(X_LGUI));
+                SEND_STRING(SS_UP(X_LALT));
+                SEND_STRING(SS_UP(X_LCTL));
+            }
         case LINUX_INSERT:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LSFT));
@@ -285,11 +296,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* MACRO */
 	[MACRO] = LAYOUT(
-			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          INTELLIJ_TERMINAL,          INTELLIJ_DATABASE,  KC_NO,          KC_NO,          KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
-			KC_NO,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_NO,          KC_NO,          KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,   KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
-											            KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
+			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_NO,          INTELLIJ_TERMINAL,          INTELLIJ_DATABASE,  KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
+			KC_NO,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_NO,          POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
+			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
+											            KC_NO,              KC_NO,          KC_NO,                  KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
 	),
 
 	/* GAME */
