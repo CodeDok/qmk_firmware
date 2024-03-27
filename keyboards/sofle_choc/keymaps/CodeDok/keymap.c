@@ -19,8 +19,7 @@
 #define BASE 0
 #define SYMB 1
 #define MACRO 2
-#define GAME 3
-#define FUNC 4
+#define FUNC 3
 
 
 /* ----------- MACROS -----------*/
@@ -32,10 +31,6 @@ enum tap_dance {
 
 enum custom_keycodes {
 	SCREENSHOT = SAFE_RANGE,
-	AMD_FULL,
-	AMD_OVERLAY,
-	STEAM_OVERLAY,
-	DISCORD_OVERLAY,
 	INTELLIJ_MOVE_FORWARD,
 	INTELLIJ_MOVE_BACKWARD,
     INTELLIJ_SHOW_IN_EXPLORER,
@@ -44,8 +39,6 @@ enum custom_keycodes {
     INTELLIJ_LINE_DOWN,
     INTELLIJ_COMMENT_LINE,
     INTELLIJ_ACTION_SEARCH,
-    INTELLIJ_TERMINAL,
-    INTELLIJ_DATABASE,
     INTELLIJ_SHOW_USAGE,
     INTELLIJ_LAST_EDIT,
     POWERTOYS_TEXT_INSERT,
@@ -64,40 +57,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LSFT));
             } else {}
             break;
-
-		case AMD_FULL:
-			if (record->event.pressed) {
-				SEND_STRING(SS_LALT("r"));
-			} else {}
-			break;
-
-		case AMD_OVERLAY:
-			if (record->event.pressed) {
-				SEND_STRING(SS_DOWN(X_LCTL));
-                SEND_STRING(SS_DOWN(X_LSFT));
-                SEND_STRING(SS_TAP(X_O));
-                SEND_STRING(SS_UP(X_LCTL));
-                SEND_STRING(SS_UP(X_LSFT));
-			} else {}
-			break;
-
-		case STEAM_OVERLAY:
-			if (record->event.pressed) {
-				SEND_STRING(SS_DOWN(X_LSFT));
-                SEND_STRING(SS_TAP(X_F1));
-                SEND_STRING(SS_UP(X_LSFT));
-			} else {}
-			break;
-
-		case DISCORD_OVERLAY:
-			if (record->event.pressed) {
-				SEND_STRING(SS_DOWN(X_LCTL));
-                SEND_STRING(SS_DOWN(X_LSFT));
-                SEND_STRING(SS_TAP(X_HOME));
-                SEND_STRING(SS_UP(X_LCTL));
-                SEND_STRING(SS_UP(X_LSFT));
-			} else {}
-			break;
 		case INTELLIJ_MOVE_FORWARD:
 			if (record->event.pressed) {
 				SEND_STRING(SS_DOWN(X_LALT));
@@ -167,20 +126,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LCTL));
             } else {}
             break;
-        case INTELLIJ_TERMINAL:
-            if (record->event.pressed) {
-                SEND_STRING(SS_DOWN(X_LALT));
-                SEND_STRING(SS_TAP(X_F12));
-                SEND_STRING(SS_UP(X_LALT));
-            } else {}
-            break;
-        case INTELLIJ_DATABASE:
-            if (record->event.pressed) {
-                SEND_STRING(SS_DOWN(X_LALT));
-                SEND_STRING(SS_TAP(X_F11));
-                SEND_STRING(SS_UP(X_LALT));
-            } else {}
-            break;
         case INTELLIJ_SHOW_USAGE:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
@@ -202,7 +147,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case POWERTOYS_TEXT_INSERT:
             if(record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
-                SEND_STRING(SS_DOWN(X_LALT));                
+                SEND_STRING(SS_DOWN(X_LALT));
                 SEND_STRING(SS_DOWN(X_LGUI));
                 SEND_STRING(SS_TAP(X_V));
                 SEND_STRING(SS_UP(X_LGUI));
@@ -247,6 +192,37 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 
+void leader_end_user(void) {
+    // Intellij with prefix J
+    if (leader_sequence_three_keys(KC_I, KC_O, KC_D)) { // Intellij Open Database
+        SEND_STRING(SS_DOWN(X_LALT));
+        SEND_STRING(SS_TAP(X_F11));
+        SEND_STRING(SS_UP(X_LALT));
+
+    } else if (leader_sequence_three_keys(KC_I, KC_O, KC_T)) { // Intellij Open Terminal
+        SEND_STRING(SS_DOWN(X_LALT));
+        SEND_STRING(SS_TAP(X_F12));
+        SEND_STRING(SS_UP(X_LALT));
+
+    } else if (leader_sequence_three_keys(KC_I, KC_O, KC_B)) { // Intellij Open Branches
+        SEND_STRING(SS_DOWN(X_LCTL));
+        SEND_STRING(SS_DOWN(X_LSFT));
+        SEND_STRING(SS_TAP(X_GRAVE));
+        SEND_STRING(SS_UP(X_LSFT));
+        SEND_STRING(SS_UP(X_LCTL));
+
+    } else if (leader_sequence_two_keys(KC_I, KC_D)) { // Intellij Debug
+        SEND_STRING(SS_DOWN(X_LSFT));
+        SEND_STRING(SS_TAP(X_F9));
+        SEND_STRING(SS_UP(X_LSFT));
+        
+    } else if (leader_sequence_two_keys(KC_I, KC_R)) { // Intellij Debug
+        SEND_STRING(SS_DOWN(X_LSFT));
+        SEND_STRING(SS_TAP(X_F10));
+        SEND_STRING(SS_UP(X_LSFT));
+    }
+}
+
 /* ----------- ENCODERS ----------- */
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -254,7 +230,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 	[BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 	[SYMB] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 	[MACRO] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
-	[GAME] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 	[FUNC] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 };
 #endif
@@ -282,7 +257,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                           DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           DE_PLUS,
 			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           DE_HASH,        KC_RSFT,
 			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,        KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         DE_MINS,        KC_RALT,
-                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         MO(SYMB),       KC_ENT,         KC_BSPC,        MO(FUNC),       MO(MACRO),      TO(3)
+                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         MO(SYMB),       KC_ENT,         KC_BSPC,        MO(FUNC),       MO(MACRO),      QK_LEAD
 	),
 
 	/*SYMB*/
@@ -297,20 +272,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	/* MACRO */
 	[MACRO] = LAYOUT(
 			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          INTELLIJ_TERMINAL,          INTELLIJ_DATABASE,  KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
+			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
 			KC_NO,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_NO,          POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
 			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
-											            KC_NO,              KC_NO,          KC_NO,                  KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_NO,                      KC_NO,                      KC_NO
+											            KC_NO,              KC_NO,          KC_NO,                  KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_TRNS,                     KC_TRNS,                      KC_NO
 	),
 
-	/* GAME */
-	[GAME] = LAYOUT(
-			KC_LGUI,        KC_NO,          KC_1,               KC_2,           KC_3,           KC_4,                                           KC_MPRV,        KC_MPLY,        KC_MNXT,        KC_NO,          KC_NO,          KC_ESC,
-			KC_F1,          KC_TAB,         KC_Q,               KC_W,           KC_E,           KC_R,                                           DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           AMD_FULL,
-			KC_F2,          KC_LSFT,        KC_A,               KC_S,           KC_D,           KC_F,                                           KC_H,           KC_J,           KC_K,           KC_L,           STEAM_OVERLAY,  AMD_OVERLAY,
-			KC_F3,          KC_LCTL,        DE_Y,               KC_X,           KC_C,           KC_V,           KC_TRNS,        KC_NO,          KC_N,           KC_M,           KC_NO,          KC_NO,          DISCORD_OVERLAY,KC_NO,
-											KC_5,            	KC_LALT,        KC_B,           KC_SPC,         KC_G,           KC_ENT,         MO(FUNC),       KC_NO,          KC_NO,          TO(BASE)
-	),
 
 	/* FUNC */
 	[FUNC] = LAYOUT(
