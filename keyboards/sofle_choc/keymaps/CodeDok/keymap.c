@@ -53,27 +53,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_DOWN(X_LGUI));
                 SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_S));
+
+            } else {
                 SEND_STRING(SS_UP(X_LGUI));
                 SEND_STRING(SS_UP(X_LSFT));
-            } else {}
+            }
             break;
 		case INTELLIJ_MOVE_FORWARD:
 			if (record->event.pressed) {
 				SEND_STRING(SS_DOWN(X_LALT));
 				SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_TAP(X_RIGHT));
+
+			} else {
                 SEND_STRING(SS_UP(X_LCTL));
                 SEND_STRING(SS_UP(X_LALT));
-			} else {}
+            }
             break;
         case INTELLIJ_MOVE_BACKWARD:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LALT));
 				SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_TAP(X_LEFT));
+
+            } else {
                 SEND_STRING(SS_UP(X_LCTL));
                 SEND_STRING(SS_UP(X_LALT));
-            } else {}
+            }
             break;
         case INTELLIJ_SHOW_IN_EXPLORER:
             if (record->event.pressed) {
@@ -88,61 +94,75 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_DOWN(X_LCTL));
 				SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_LBRC)); // ü
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LCTL));
-            } else {}
+            }
             break;
         case INTELLIJ_LINE_UP:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LALT));
 				SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_UP));
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LALT));
-            } else {}
+            }
             break;
         case INTELLIJ_LINE_DOWN:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LALT));
 				SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_DOWN));
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LALT));
-            } else {}
+            }
             break;
         case INTELLIJ_COMMENT_LINE:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_TAP(X_SLASH));
+
+            } else {
                 SEND_STRING(SS_UP(X_LCTL));
-            } else {}
+            }
             break;
         case INTELLIJ_ACTION_SEARCH:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_A));
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LCTL));
-            } else {}
+            }
             break;
         case INTELLIJ_SHOW_USAGE:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_DOWN(X_LALT));
                 SEND_STRING(SS_TAP(X_F7));
+
+            } else {
                 SEND_STRING(SS_UP(X_LALT));
                 SEND_STRING(SS_UP(X_LCTL));
-            } else {}
+            }
             break;
         case INTELLIJ_LAST_EDIT:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
                 SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_BSPC));
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
                 SEND_STRING(SS_UP(X_LCTL));
-            } else {}
+            }
             break;
         case POWERTOYS_TEXT_INSERT:
             if(record->event.pressed) {
@@ -150,16 +170,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_DOWN(X_LALT));
                 SEND_STRING(SS_DOWN(X_LGUI));
                 SEND_STRING(SS_TAP(X_V));
+            } else {
                 SEND_STRING(SS_UP(X_LGUI));
                 SEND_STRING(SS_UP(X_LALT));
                 SEND_STRING(SS_UP(X_LCTL));
+
             }
         case LINUX_INSERT:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LSFT));
                 SEND_STRING(SS_TAP(X_INS));
+
+            } else {
                 SEND_STRING(SS_UP(X_LSFT));
-            } else {}
+            }
             break;
     }
 	return true;
@@ -211,15 +235,6 @@ void leader_end_user(void) {
         SEND_STRING(SS_UP(X_LSFT));
         SEND_STRING(SS_UP(X_LCTL));
 
-    } else if (leader_sequence_two_keys(KC_I, KC_D)) { // Intellij Debug
-        SEND_STRING(SS_DOWN(X_LSFT));
-        SEND_STRING(SS_TAP(X_F9));
-        SEND_STRING(SS_UP(X_LSFT));
-        
-    } else if (leader_sequence_two_keys(KC_I, KC_R)) { // Intellij Debug
-        SEND_STRING(SS_DOWN(X_LSFT));
-        SEND_STRING(SS_TAP(X_F10));
-        SEND_STRING(SS_UP(X_LSFT));
     }
 }
 
@@ -257,7 +272,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                           DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           DE_PLUS,
 			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           DE_HASH,        KC_RSFT,
 			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,        KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         DE_MINS,        KC_RALT,
-                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         MO(SYMB),       KC_ENT,         KC_BSPC,        MO(FUNC),       MO(MACRO),      QK_LEAD
+                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         MO(SYMB),       KC_ENT,         KC_BSPC,        MO(FUNC),       MO(MACRO),      MT(MOD_LALT, QK_LEAD)
 	),
 
 	/*SYMB*/
@@ -266,24 +281,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_NO,          KC_ESC,         DE_QUOT,            DE_LPRN,        DE_RPRN,        DE_TILD,                                        DE_AT,          DE_UDIA,         KC_UP,         DE_ODIA,        DE_EQL,         DE_ACUT,
 			KC_LSFT,        DE_ADIA,        DE_SS,              DE_LCBR,        DE_RCBR,        DE_SLSH,                                        TD(TD_HOME),    KC_LEFT,         KC_DOWN,       KC_RIGHT,       TD(TD_END),     KC_RSFT,
 			KC_LCTL,        DE_CIRC,        DE_PIPE,            DE_LBRC,        DE_RBRC,        DE_BSLS,        KC_NO,          KC_NO,          DE_ASTR,        DE_PLUS,         KC_BSLS,       DE_EXLM,        DE_QUES,        KC_RCTL,
-											KC_TRNS,            KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_NO,         KC_LGUI
+											KC_TRNS,            KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_TRNS,       KC_LGUI
 	),
 
 	/* MACRO */
 	[MACRO] = LAYOUT(
-			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
-			KC_NO,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_NO,          POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_NO,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
+			KC_MUTE,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
+			KC_MNXT,          KC_NO,                      KC_NO,              KC_PGUP,        KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
+			KC_MPLY,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,   		KC_PGDN,        POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
+			KC_MPRV,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
 											            KC_NO,              KC_NO,          KC_NO,                  KC_NO,          KC_NO,          KC_NO,          KC_NO,              KC_TRNS,                     KC_TRNS,                      KC_NO
 	),
 
 
 	/* FUNC */
 	[FUNC] = LAYOUT(
-			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_PSLS,        KC_PAST,        KC_PMNS,        KC_NO,
-			KC_NO,          KC_F1,          KC_F2,              KC_F3,          KC_F4,          KC_NO,                                          KC_NO,          KC_7,           KC_8,           KC_9,           KC_PPLS,        KC_NO,
-			KC_LSFT,        KC_F5,          KC_F6,              KC_F7,          KC_F8,          KC_NO,                                          KC_NO,          KC_4,           KC_5,           KC_6,           KC_0,           KC_LSFT,
+			KC_NO,          KC_NO,          KC_NO,              KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_PSLS,        KC_PAST,        KC_NO,        KC_NO,
+			KC_NO,          KC_F1,          KC_F2,              KC_F3,          KC_F4,          KC_NO,                                          KC_PPLS,        KC_7,           KC_8,           KC_9,           KC_PMNS,        KC_NO,
+			KC_LSFT,        KC_F5,          KC_F6,              KC_F7,          KC_F8,          KC_NO,                                          KC_DOT,         KC_4,           KC_5,           KC_6,           KC_0,           KC_LSFT,
 			KC_LCTL,        KC_F9,          KC_F10,             KC_F11,         KC_F12,         KC_NO,          KC_NO,          KC_NO,          KC_PDOT,        KC_1,           KC_2,           KC_3,           KC_PEQL,        KC_LCTL,
 											KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_NO,          KC_TRNS,        KC_TRNS,        KC_PENT
 	)
