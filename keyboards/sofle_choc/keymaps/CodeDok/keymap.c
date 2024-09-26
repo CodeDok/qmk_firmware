@@ -20,6 +20,7 @@
 #define SYMB 1
 #define MACRO 2
 #define FUNC 3
+#define MOUSE 4
 
 
 /* ----------- MACROS -----------*/
@@ -251,6 +252,19 @@ void leader_end_user(void) {
     }
 }
 
+
+
+const uint16_t PROGMEM leader_combo[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM escape_combo[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM screenshot_combo[] = {KC_T, KC_S, COMBO_END};
+combo_t key_combos[] = {
+    COMBO(leader_combo, QK_LEAD),
+    COMBO(escape_combo, KC_ESC),
+    COMBO(screenshot_combo, SCREENSHOT),
+};
+
+
+
 /* ----------- ENCODERS ----------- */
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -259,6 +273,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 	[SYMB] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 	[MACRO] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 	[FUNC] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
+    [MOUSE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 };
 #endif
 
@@ -281,11 +296,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* BASE */
 	[BASE] = LAYOUT(
-			KC_ESC,         KC_1,           KC_2,               KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           DE_SS,
-			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                           DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           DE_PLUS,
-			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                           KC_H,           KC_J,           KC_K,           KC_L,           DE_HASH,        KC_RSFT,
-			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,        KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         DE_MINS,        KC_RALT,
-                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         MO(SYMB),       KC_ENT,         KC_BSPC,        MO(FUNC),       MO(MACRO),      QK_LEAD
+			KC_ESC,         KC_1,           KC_2,               KC_3,           KC_4,           KC_5,                                               KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           DE_SS,
+			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                               DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           DE_PLUS,
+			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                               KC_H,           KC_J,           KC_K,           KC_L,           DE_HASH,        KC_RSFT,
+			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,            KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         DE_MINS,        KC_RALT,
+                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         TL_LOWR,            KC_ENT,         KC_BSPC,        TL_UPPR,       MO(MACRO),      QK_LEAD
 	),
 
 	/*SYMB*/
@@ -301,11 +316,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[MACRO] = LAYOUT(
 			KC_MUTE,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
 			KC_MNXT,          KC_NO,                      KC_NO,              KC_PGUP,        KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
-			KC_MPLY,          INTELLIJ_ACTION_SEARCH,     SCREENSHOT,         KC_PGDN,        POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
+			KC_MPLY,          INTELLIJ_ACTION_SEARCH,     KC_NO,              KC_PGDN,        POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
 			KC_MPRV,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
 											              KC_TRNS,            KC_TRNS,        KC_TRNS,                KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO,              KC_TRNS,                     KC_TRNS,                      KC_NO
 	),
 
+
+	[MOUSE] = LAYOUT(
+		KC_NO,      KC_NO,      KC_NO,                    KC_NO,                  KC_NO,                  KC_NO,                                            KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
+		KC_NO,      KC_NO,      MS_BTN1,                  QK_MOUSE_WHEEL_UP,      MS_BTN2,                KC_NO,                                            KC_NO,      KC_NO,                      QK_MOUSE_CURSOR_UP,     KC_NO,                  KC_NO,      KC_NO,
+		KC_PGUP,    MS_ACL0,    QK_MOUSE_WHEEL_LEFT,      QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_RIGHT,   MS_ACL1,                                            KC_NO,      QK_MOUSE_CURSOR_LEFT,       QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO,      KC_NO,
+		KC_NO,      KC_PGDN,    KC_NO,                    SCREENSHOT,             KC_NO,                  KC_NO,                    KC_NO,      KC_NO,      KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
+					            KC_TRNS,                  KC_TRNS,                KC_TRNS,                KC_TRNS,                  KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                    KC_TRNS,                KC_TRNS
+	),
 
 	/* FUNC */
 	[FUNC] = LAYOUT(
