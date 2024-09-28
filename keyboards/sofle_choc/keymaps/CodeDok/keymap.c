@@ -23,13 +23,8 @@
 #define MOUSE 4
 
 
-/* ----------- MACROS -----------*/
 
-enum tap_dance {
-    TD_END,
-    TD_HOME
-};
-
+/* ----------- Macros / Custom Keycodes -----------*/
 enum custom_keycodes {
 	SCREENSHOT = SAFE_RANGE,
 	INTELLIJ_MOVE_FORWARD,
@@ -43,8 +38,8 @@ enum custom_keycodes {
     INTELLIJ_SHOW_USAGE,
     INTELLIJ_LAST_EDIT,
     POWERTOYS_TEXT_INSERT,
-    LINUX_INSERT,
-    VIVALDI_MOVE_WORKSPACE
+    VIVALDI_MOVE_WORKSPACE,
+    WINDOWS_TASK_MANAGER
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -178,15 +173,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LCTL));
 
             }
-        case LINUX_INSERT:
-            if (record->event.pressed) {
-                SEND_STRING(SS_DOWN(X_LSFT));
-                SEND_STRING(SS_TAP(X_INS));
-
-            } else {
-                SEND_STRING(SS_UP(X_LSFT));
-            }
-            break;
         case VIVALDI_MOVE_WORKSPACE:
             if (record->event.pressed) {
                 SEND_STRING(SS_DOWN(X_LCTL));
@@ -199,11 +185,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_UP(X_LCTL));
                 SEND_STRING(SS_UP(X_LSFT));
             }
+            break;
+        case WINDOWS_TASK_MANAGER:
+            if (record->event.pressed) {
+                SEND_STRING(SS_DOWN(X_LCTL));
+				SEND_STRING(SS_DOWN(X_LSFT));
+                SEND_STRING(SS_TAP(X_ESC)); // ü
+
+            } else {
+                SEND_STRING(SS_UP(X_LSFT));
+                SEND_STRING(SS_UP(X_LCTL));
+            }
+            break;
     }
 	return true;
 }
 
 
+
+
+
+/* ----------- Caps Word -----------*/
 bool caps_word_press_user(uint16_t keycode) {
     switch (keycode) {
         // Keycodes that continue Caps Word, with shift applied.
@@ -224,12 +226,26 @@ bool caps_word_press_user(uint16_t keycode) {
     }
 }
 
+
+
+
+
+/* ----------- Tap Dance -----------*/
+enum tap_dance {
+    TD_END,
+    TD_HOME
+};
+
 tap_dance_action_t tap_dance_actions[] = {
     [TD_HOME] = ACTION_TAP_DANCE_DOUBLE(KC_HOME, LCTL(KC_HOME)),
-    [TD_END] = ACTION_TAP_DANCE_DOUBLE(KC_END, LCTL(KC_END)),
+    [TD_END] = ACTION_TAP_DANCE_DOUBLE(KC_END, LCTL(KC_END))
 };
 
 
+
+
+
+/* ----------- Leader Key -----------*/
 void leader_end_user(void) {
     // Intellij with prefix J
     if (leader_sequence_three_keys(KC_I, KC_O, KC_D)) { // Intellij Open Database
@@ -254,15 +270,26 @@ void leader_end_user(void) {
 
 
 
+
+
+/* ----------- Combos -----------*/
 const uint16_t PROGMEM leader_combo[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM escape_combo[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM screenshot_combo[] = {KC_T, KC_S, COMBO_END};
+const uint16_t PROGMEM app_combo[] = {KC_RIGHT, KC_LEFT, COMBO_END};
 combo_t key_combos[] = {
     COMBO(leader_combo, QK_LEAD),
     COMBO(escape_combo, KC_ESC),
     COMBO(screenshot_combo, SCREENSHOT),
+    COMBO(app_combo, KC_APP)
 };
 
+/* ----------- Key Override ----------- */
+const key_override_t quotes_override = ko_make_basic(MOD_MASK_SHIFT, DE_QUOT, DE_DQUO);
+
+const key_override_t *key_overrides[] = {
+    &quotes_override
+};
 
 
 /* ----------- ENCODERS ----------- */
@@ -276,6 +303,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [MOUSE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(LCTL(LSFT(KC_TAB)), LCTL(KC_TAB))},
 };
 #endif
+
 
 
 /* ----------- LAYOUT ----------- */
@@ -296,20 +324,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 	/* BASE */
 	[BASE] = LAYOUT(
-			KC_ESC,         KC_1,           KC_2,               KC_3,           KC_4,           KC_5,                                               KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           DE_SS,
-			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                               DE_Z,           KC_U,           KC_I,           KC_O,           KC_P,           DE_PLUS,
-			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                               KC_H,           KC_J,           KC_K,           KC_L,           DE_HASH,        KC_RSFT,
-			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,            KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,         DE_MINS,        KC_RALT,
-                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         TL_LOWR,            KC_ENT,         KC_BSPC,        TL_UPPR,       MO(MACRO),      QK_LEAD
-	),
+			KC_ESC,         KC_1,           KC_2,               KC_3,           KC_4,           KC_5,                                               KC_6,           KC_7,           KC_8,           KC_9,               KC_0,           DE_SS,
+			KC_NUBS,        KC_Q,           KC_W,               KC_E,           KC_R,           KC_T,                                               DE_Z,           KC_U,           KC_I,           KC_O,               KC_P,           DE_PLUS,
+			KC_LSFT,        KC_A,           KC_S,               KC_D,           KC_F,           KC_G,                                               KC_H,           KC_J,           KC_K,           KC_L,               DE_HASH,        KC_RSFT,
+			KC_TAB,         DE_Y,           KC_X,               KC_C,           KC_V,           KC_B,           KC_MUTE,            KC_MUTE,        KC_N,           KC_M,           KC_COMM,        KC_DOT,             DE_MINS,        KC_RALT,
+                                            KC_LGUI,            KC_LALT,        KC_LCTL,        KC_SPC,         TL_LOWR,            KC_ENT,         KC_BSPC,        TL_UPPR,       MO(MACRO),       KC_NO
+	),  // TL_LOWR = SYMB, TL_UPPR = FUNC
 
 	/*SYMB*/
 	[SYMB] = LAYOUT(
-			KC_NO,                      KC_NO,          KC_NO,              KC_NO,          KC_INS,         KC_PSCR,                                        KC_NO,          KC_NO,           KC_NO,         KC_NO,          KC_NO,          KC_NO,
-            VIVALDI_MOVE_WORKSPACE,     KC_ESC,         DE_QUOT,            DE_LPRN,        DE_RPRN,        DE_TILD,                                        DE_AT,          DE_UDIA,         KC_UP,         DE_ODIA,        DE_EQL,         DE_ACUT,
-			KC_LSFT,                    DE_ADIA,        DE_SS,              DE_LCBR,        DE_RCBR,        DE_SLSH,                                        TD(TD_HOME),    KC_LEFT,         KC_DOWN,       KC_RIGHT,       TD(TD_END),     KC_RSFT,
-			KC_LCTL,                    DE_CIRC,        DE_PIPE,            DE_LBRC,        DE_RBRC,        DE_BSLS,        KC_NO,          KC_NO,          DE_ASTR,        DE_PLUS,         KC_BSLS,       DE_EXLM,        DE_QUES,        KC_RCTL,
-							            				KC_TRNS,            KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_TRNS,       KC_LGUI
+			KC_NO,                      KC_NO,          KC_NO,              KC_NO,          KC_INS,         KC_PSCR,                                        KC_NO,          KC_NO,           WINDOWS_TASK_MANAGER,          KC_NO,          KC_NO,          KC_NO,
+            VIVALDI_MOVE_WORKSPACE,     KC_ESC,         DE_QUOT,            DE_LPRN,        DE_RPRN,        DE_TILD,                                        DE_AT,          DE_UDIA,         KC_UP,                         DE_ODIA,        DE_EQL,         DE_ACUT,
+			KC_LSFT,                    DE_ADIA,        DE_SS,              DE_LCBR,        DE_RCBR,        DE_SLSH,                                        TD(TD_HOME),    KC_LEFT,         KC_DOWN,                       KC_RIGHT,       TD(TD_END),     KC_RSFT,
+			KC_LCTL,                    DE_CIRC,        DE_PIPE,            DE_LBRC,        DE_RBRC,        DE_BSLS,        KC_NO,          KC_NO,          DE_ASTR,        DE_PLUS,         KC_BSLS,                       DE_EXLM,        DE_QUES,        KC_RCTL,
+							            				KC_TRNS,            KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_TRNS,                       KC_LGUI
 	),
 
 	/* MACRO */
@@ -317,16 +345,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 			KC_MUTE,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,                                          KC_NO,              KC_NO,                      KC_NO,                      KC_NO,                      KC_NO,          KC_NO,
 			KC_MNXT,          KC_NO,                      KC_NO,              KC_PGUP,        KC_NO,                  KC_NO,                                          KC_NO,              INTELLIJ_LAST_EDIT,         INTELLIJ_LINE_UP,           INTELLIJ_SHOW_USAGE,        KC_NO,          KC_NO,
 			KC_MPLY,          INTELLIJ_ACTION_SEARCH,     KC_NO,              KC_PGDN,        POWERTOYS_TEXT_INSERT,  KC_NO,                                          INTELLIJ_PIN_TAB,   INTELLIJ_MOVE_BACKWARD,     INTELLIJ_LINE_DOWN,         INTELLIJ_MOVE_FORWARD,      KC_NO,          KC_NO,
-			KC_MPRV,          KC_NO,                      KC_NO,              KC_NO,          LINUX_INSERT,           KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
+			KC_MPRV,          KC_NO,                      KC_NO,              KC_NO,          KC_NO,                  KC_NO,          KC_NO,          KC_NO,          KC_NO,              INTELLIJ_COMMENT_LINE,      INTELLIJ_SHOW_IN_EXPLORER,  KC_NO,                      KC_NO,          KC_NO,
 											              KC_TRNS,            KC_TRNS,        KC_TRNS,                KC_TRNS,        KC_TRNS,        KC_NO,          KC_NO,              KC_TRNS,                     KC_TRNS,                      KC_NO
 	),
 
 
 	[MOUSE] = LAYOUT(
 		KC_NO,      KC_NO,      KC_NO,                    KC_NO,                  KC_NO,                  KC_NO,                                            KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
-		KC_NO,      KC_NO,      MS_BTN1,                  QK_MOUSE_WHEEL_UP,      MS_BTN2,                KC_NO,                                            KC_NO,      KC_NO,                      QK_MOUSE_CURSOR_UP,     KC_NO,                  KC_NO,      KC_NO,
-		KC_PGUP,    MS_ACL0,    QK_MOUSE_WHEEL_LEFT,      QK_MOUSE_WHEEL_DOWN,    QK_MOUSE_WHEEL_RIGHT,   MS_ACL1,                                            KC_NO,      QK_MOUSE_CURSOR_LEFT,       QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  KC_NO,      KC_NO,
-		KC_NO,      KC_PGDN,    KC_NO,                    SCREENSHOT,             KC_NO,                  KC_NO,                    KC_NO,      KC_NO,      KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
+		KC_NO,      KC_NO,      QK_MOUSE_WHEEL_LEFT,      QK_MOUSE_WHEEL_UP,      QK_MOUSE_WHEEL_RIGHT,   KC_NO,                                            KC_NO,      KC_NO,                      QK_MOUSE_CURSOR_UP,     KC_NO,                  KC_NO,      KC_NO,
+		KC_PGUP,    MS_ACL0,    MS_BTN1,                  QK_MOUSE_WHEEL_DOWN,    MS_BTN2,                MS_ACL1,                                          KC_NO,      QK_MOUSE_CURSOR_LEFT,       QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  MS_ACL1,      KC_NO,
+		KC_NO,      KC_PGDN,    KC_NO,                    MS_BTN2,                KC_NO,                  SCREENSHOT,               KC_NO,      KC_NO,      KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
 					            KC_TRNS,                  KC_TRNS,                KC_TRNS,                KC_TRNS,                  KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                    KC_TRNS,                KC_TRNS
 	),
 

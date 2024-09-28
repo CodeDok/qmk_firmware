@@ -25,6 +25,8 @@
 // #define SPLIT_USB_DETECT
 // #define SPLIT_USB_TIMEOUT 5000
 // #define MASTER_LEFT
+
+
 #define NO_MUSIC_MODE
 
 // Caps Word
@@ -64,7 +66,7 @@
 
 
 #define MOUSEKEY_INERTIA
-#define MOUSEKEY_TIME_TO_MAX 72
+#define MOUSEKEY_TIME_TO_MAX 85
 #define MOUSEKEY_MAX_SPEED 18
 #define MOUSEKEY_DELAY 100
 #define MOUSEKEY_INTERVAL 8
@@ -72,3 +74,7 @@
 
 // Combo
 #define COMBO_TERM 50
+
+
+// Dynamic Macro
+// #define DYNAMIC_MACRO_NO_NESTING 
