@@ -8,6 +8,9 @@ MIDI_ENABLE = no
 BLUETOOTH_ENABLE = no
 AUTO_SHIFT_ENABLE = no
 COMMAND_ENABLE = no
+SPACE_CADET_ENABLE = no
+GRAVE_ESC_ENABLE = no 
+MAGIC_ENABLE = no
 
 ENCODER_MAP_ENABLE = yes
 LTO_ENABLE = yes
@@ -17,5 +20,5 @@ TAP_DANCE_ENABLE = yes
 TRI_LAYER_ENABLE = yes
 MOUSEKEY_ENABLE = yes
 COMBO_ENABLE = yes
-# DYNAMIC_MACRO_ENABLE = yes # #Buggy because of lacking ram 
+DYNAMIC_MACRO_ENABLE = yes # #Buggy because of lacking ram 
 KEY_OVERRIDE_ENABLE = yes
