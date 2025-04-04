@@ -1,6 +1,7 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     // Unofficially, QMK uses spaces for indentation
+    "window.title": "QMK-Firmware",
     "editor.insertSpaces": true,
     // Configure glob patterns for excluding files and folders.
     "files.exclude": {
