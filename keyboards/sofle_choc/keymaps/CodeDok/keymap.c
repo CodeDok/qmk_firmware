@@ -38,7 +38,8 @@ enum custom_keycodes {
     INTELLIJ_LAST_EDIT,
     POWERTOYS_TEXT_INSERT,
     VIVALDI_MOVE_WORKSPACE,
-    WINDOWS_TASK_MANAGER
+    WINDOWS_TASK_MANAGER,
+    KVM_NEXT_INPUT
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -240,6 +241,10 @@ void leader_end_user(void) {
         SEND_STRING(SS_TAP(X_S));      
         SEND_STRING(SS_UP(X_LGUI));
         SEND_STRING(SS_UP(X_LSFT));                                                                                                                                          
+    } else if (leader_sequence_three_keys(KC_K, KC_V, KC_M)) {
+        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(100));
+        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(100));
+        SEND_STRING(SS_TAP(X_PGUP));                                                                                                                                        
     }
 }
 
@@ -327,9 +332,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[MOUSE] = LAYOUT(
 		KC_NO,      KC_NO,      KC_NO,                    KC_NO,                  KC_NO,                  KC_NO,                                            KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
 		KC_NO,      KC_NO,      QK_MOUSE_WHEEL_LEFT,      QK_MOUSE_WHEEL_UP,      QK_MOUSE_WHEEL_RIGHT,   KC_NO,                                            KC_NO,      KC_NO,                      QK_MOUSE_CURSOR_UP,     KC_NO,                  KC_NO,      KC_NO,
-		KC_PGUP,    MS_ACL0,    MS_BTN1,                  QK_MOUSE_WHEEL_DOWN,    MS_BTN2,                MS_ACL1,                                          KC_NO,      QK_MOUSE_CURSOR_LEFT,       QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  MS_ACL1,      KC_NO,
-		KC_NO,      KC_PGDN,    KC_NO,                    MS_BTN3,                KC_NO,                  KC_NO,               KC_NO,      KC_NO,      KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
-					            KC_TRNS,                  KC_TRNS,                KC_TRNS,                KC_TRNS,                  KC_TRNS,    KC_TRNS,    KC_TRNS,    KC_TRNS,                    KC_TRNS,                KC_TRNS
+		KC_PGUP,    MS_ACL0,    MS_BTN1,                  QK_MOUSE_WHEEL_DOWN,    MS_BTN2,                MS_ACL1,                                          KC_NO,      QK_MOUSE_CURSOR_LEFT,       QK_MOUSE_CURSOR_DOWN,   QK_MOUSE_CURSOR_RIGHT,  MS_ACL1,    KC_NO,
+		KC_NO,      KC_PGDN,    KC_NO,                    MS_BTN3,                KC_NO,                  KC_NO,         KC_NO,                 KC_NO,      KC_NO,      KC_NO,                      KC_NO,                  KC_NO,                  KC_NO,      KC_NO,
+					            KC_TRNS,                  KC_TRNS,                KC_TRNS,                KC_TRNS,       KC_TRNS,               KC_TRNS,    KC_TRNS,    KC_TRNS,                    KC_TRNS,                KC_TRNS
 	),
 
 	/* FUNC */
