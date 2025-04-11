@@ -242,8 +242,8 @@ void leader_end_user(void) {
         SEND_STRING(SS_UP(X_LGUI));
         SEND_STRING(SS_UP(X_LSFT));                                                                                                                                          
     } else if (leader_sequence_three_keys(KC_K, KC_V, KC_M)) {
-        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(100));
-        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(100));
+        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(250));
+        SEND_STRING(SS_TAP(X_RCTL) SS_DELAY(250));
         SEND_STRING(SS_TAP(X_PGUP));                                                                                                                                        
     }
 }
@@ -316,7 +316,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             VIVALDI_MOVE_WORKSPACE,     KC_ESC,         DE_QUOT,            DE_LPRN,        DE_RPRN,        DE_TILD,                                        DE_AT,          DE_UDIA,         KC_UP,                         DE_ODIA,        DE_EQL,         DE_ACUT,
 			KC_LSFT,                    DE_ADIA,        DE_SS,              DE_LCBR,        DE_RCBR,        DE_SLSH,                                        TD(TD_HOME),    KC_LEFT,         KC_DOWN,                       KC_RIGHT,       TD(TD_END),     KC_RSFT,
 			KC_LCTL,                    DE_CIRC,        DE_PIPE,            DE_LBRC,        DE_RBRC,        DE_BSLS,        KC_NO,          KC_NO,          DE_ASTR,        DE_PLUS,         KC_BSLS,                       DE_EXLM,        DE_QUES,        KC_RCTL,
-							            				KC_TRNS,            KC_TRNS,        KC_NO,          KC_NO,          KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_TRNS,                       DM_REC1
+							            				KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_LALT,        KC_DEL,         KC_TRNS,         KC_TRNS,                       DM_REC1
 	),
 
 	/* MACRO */
